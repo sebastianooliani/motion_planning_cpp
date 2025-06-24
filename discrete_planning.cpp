@@ -2,10 +2,68 @@
 #include <vector>
 #include <algorithm>
 
+class Node {
+    public:
+        int id;
+        Node(int id) : id(id) {}
+};
+
+std::vector<int> returnpath(int startNode, int goalNode,
+                    const std::vector<int>& parent) {
+    std::cout << "Returning path from node " << startNode
+              << " to node " << goalNode << std::endl;
+    // This function would typically return the path found by the search algorithm.
+    // For now, we will just return an empty vector.
+    // start from goal node and go to start node
+    std::vector<int> path;
+    if (startNode == goalNode) {
+        path.push_back(startNode);
+        return path;
+    }
+    int prev_node = parent[goalNode]; // set parent of goal node to start node
+    path.push_back(goalNode);
+    while (prev_node != startNode) {
+        path.push_back(prev_node);
+        prev_node = parent[prev_node]; // go to parent of previous node
+    }
+    // finally, revert the path to start from start node
+    path.push_back(startNode);
+    std::reverse(path.begin(), path.end());
+    return path;
+}
+
+void printPath(const std::vector<int>& path) {
+    std::cout << "Path: ";
+    for (int i = 0; i < path.size(); ++i) {
+        std::cout << path[i];
+        if (i < path.size() - 1) {
+            std::cout << " -> ";
+        }
+    }
+    std::cout << std::endl;
+}
+
 class DepthFirstSearch {
     public:
         DepthFirstSearch() {
             std::cout << "DepthFirstSearch constructor called." << std::endl;
+        }
+
+        int checkNode(int startNode, int goalNode,
+                      int graph_length) {
+            // This function checks if the start node is the same as the goal node.
+            // If they are the same, it returns 1, otherwise it returns 0.
+            if(graph_length == 0) {
+                std::cout << "Graph is empty." << std::endl;
+                return 0;
+            }
+            if(startNode < 0 || startNode >= graph_length || 
+               goalNode < 0 || goalNode >= graph_length) {
+                std::cout << "Invalid start or goal node." << std::endl;
+                return 0;
+            }
+
+            return 1;
         }
 
         void search(int startNode, int goalNode,
@@ -15,10 +73,16 @@ class DepthFirstSearch {
             std::cout << "Searching from node " << startNode
                     << " to node " << goalNode << std::endl;
 
+            if(checkNode(startNode, goalNode, graph.size()) == 0) {
+                return;
+            }
+
             std::vector<int> queue;
             queue.push_back(startNode);
             std::vector<int> visited;
             visited.push_back(startNode);
+            // parent vector to store the parent of each node
+            std::vector<int> parent(graph.size(), -1);
 
             int iteration = 0;
             while(queue.size() > 0) {
@@ -31,6 +95,9 @@ class DepthFirstSearch {
                 if(current_node == goalNode){
                     std::cout << "Goal node found: " << goalNode << std::endl;
                     std::cout << "Total iterations: " << iteration << std::endl;
+
+                    std::vector<int> path = returnpath(startNode, goalNode, parent);
+                    printPath(path);
                     return;
                 }
                 
@@ -45,22 +112,34 @@ class DepthFirstSearch {
                     if(!found) {
                         queue.push_back(next_node);
                         visited.push_back(next_node);
+                        parent[next_node] = current_node; // set parent of next node
                     }
                 }
             }
         }
 };
 
-class Node {
-    public:
-        int id;
-        Node(int id) : id(id) {}
-};
-
 class BreadthFirstSearch {
     public:
         BreadthFirstSearch() {
             std::cout << "BreadthFirstSearch constructor called." << std::endl;
+        }
+
+        int checkNode(int startNode, int goalNode,
+                      int graph_length) {
+            // This function checks if the start node is the same as the goal node.
+            // If they are the same, it returns 1, otherwise it returns 0.
+            if(graph_length == 0) {
+                std::cout << "Graph is empty." << std::endl;
+                return 0;
+            }
+            if(startNode < 0 || startNode >= graph_length || 
+               goalNode < 0 || goalNode >= graph_length) {
+                std::cout << "Invalid start or goal node." << std::endl;
+                return 0;
+            }
+
+            return 1;
         }
 
         void search(int startNode, int goalNode,
@@ -70,11 +149,17 @@ class BreadthFirstSearch {
             std::cout << "Searching from node " << startNode
                     << " to node " << goalNode << std::endl;
 
+            if(checkNode(startNode, goalNode, graph.size()) == 0) {
+                return;
+            }
+
             // Similar implementation as DepthFirstSearch but using a queue for BFS
             std::vector<int> queue;
             queue.push_back(startNode);
             std::vector<int> visited;
             visited.push_back(startNode);
+            // parent vector to store the parent of each node
+            std::vector<int> parent(graph.size(), -1);
 
             int iteration = 0;
             while(queue.size() > 0) {
@@ -87,6 +172,9 @@ class BreadthFirstSearch {
                 if(current_node == goalNode){
                     std::cout << "Goal node found: " << goalNode << std::endl;
                     std::cout << "Total iterations: " << iteration << std::endl;
+
+                    std::vector<int> path = returnpath(startNode, goalNode, parent);
+                    printPath(path);
                     return;
                 }
                 
@@ -101,6 +189,7 @@ class BreadthFirstSearch {
                     if(!found) {
                         queue.push_back(next_node);
                         visited.push_back(next_node);
+                        parent[next_node] = current_node; // set parent of next node
                     }
                 }
             }
@@ -111,17 +200,29 @@ int main() {
     // Create a simple graph as an adjacency list
     // Example: 0 -> {1, 2}, 1 -> {2}, 2 -> {0, 3}, 3 -> {}
     std::vector<std::vector<int>> graph = {
-        {1, 2},    // 0 → 1, 2
-        {3, 4},    // 1 → 3, 4
-        {5},       // 2 → 5
-        {},        // 3 → (none)
-        {},        // 4 → (none)
-        {}         // 5 → (none)
-    };
+    {1, 2},        // 0 → 1, 2
+    {3, 4},        // 1 → 3, 4
+    {5, 6},        // 2 → 5, 6
+    {7},           // 3 → 7
+    {8},           // 4 → 8
+    {9, 10},       // 5 → 9, 10
+    {11},          // 6 → 11
+    {12},          // 7 → 12
+    {13},          // 8 → 13
+    {},            // 9 → (none)
+    {4},           // 10 → 4 (cycle back)
+    {14},          // 11 → 14
+    {},            // 12 → (none)
+    {},            // 13 → (none)
+    {0, 6}         // 14 → 0, 6 (back edges creating cycles)
+};
 
+    int startNode = 0; // Starting node
+    int goalNode = 99;  // Goal node
     DepthFirstSearch dfs;
-    int startNode = 0;
-    int goalNode = 3;
     dfs.search(startNode, goalNode, graph);
+
+    BreadthFirstSearch bfs;
+    bfs.search(startNode, goalNode, graph);
     return 0;
 }
