@@ -122,6 +122,8 @@ class DepthFirstSearch {
                     queue.push_front(add_to_queue[add_to_queue.size() - 1 - i]); // reverse order to maintain DFS-like behavior
                 }
             }
+            std::cout << "Goal node not found within max depth." << std::endl;
+            std::cout << "Total iterations: " << iteration << std::endl;
         }
 };
 
@@ -199,6 +201,8 @@ class BreadthFirstSearch {
                     }
                 }
             }
+            std::cout << "Goal node not found within max depth." << std::endl;
+            std::cout << "Total iterations: " << iteration << std::endl;
         }
 };
 
@@ -300,6 +304,8 @@ class IterativeDeepening {
                 current_depth++;
                 std::cout << "\nIncreasing depth to: " << current_depth << std::endl;
             }
+            std::cout << "Goal node not found within max depth." << std::endl;
+            std::cout << "Total iterations: " << iteration << std::endl;
         }
 };
 
