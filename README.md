@@ -38,7 +38,7 @@ make
 
 For Windows users:
 ```bash
-g++ -std=c++14 discrete_planning.cpp -o main
+g++ -std=c++14 files_to_compile.cpp -o main
 ./main.exe
 ```
 <!--
