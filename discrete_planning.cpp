@@ -4,33 +4,10 @@
 #include <deque> 
 #include "utils.h"
 
-class Node {
-    public:
-        int id;
-        Node(int id) : id(id) {}
-};
-
-class DepthFirstSearch {
+class DepthFirstSearch: public Search {
     public:
         DepthFirstSearch() {
             std::cout << "\nDepthFirstSearch constructor called.\n" << std::endl;
-        }
-
-        int checkNode(int startNode, int goalNode,
-                      int graph_length) {
-            // This function checks if the start node is the same as the goal node.
-            // If they are the same, it returns 1, otherwise it returns 0.
-            if(graph_length == 0) {
-                std::cout << "Graph is empty." << std::endl;
-                return 0;
-            }
-            if(startNode < 0 || startNode >= graph_length || 
-               goalNode < 0 || goalNode >= graph_length) {
-                std::cout << "Invalid start or goal node." << std::endl;
-                return 0;
-            }
-
-            return 1;
         }
 
         void search(int startNode, int goalNode,
@@ -93,27 +70,10 @@ class DepthFirstSearch {
         }
 };
 
-class BreadthFirstSearch {
+class BreadthFirstSearch: public Search {
     public:
         BreadthFirstSearch() {
             std::cout << "\nBreadthFirstSearch constructor called.\n" << std::endl;
-        }
-
-        int checkNode(int startNode, int goalNode,
-                      int graph_length) {
-            // This function checks if the start node is the same as the goal node.
-            // If they are the same, it returns 1, otherwise it returns 0.
-            if(graph_length == 0) {
-                std::cout << "Graph is empty." << std::endl;
-                return 0;
-            }
-            if(startNode < 0 || startNode >= graph_length || 
-               goalNode < 0 || goalNode >= graph_length) {
-                std::cout << "Invalid start or goal node." << std::endl;
-                return 0;
-            }
-
-            return 1;
         }
 
         void search(int startNode, int goalNode,
@@ -172,27 +132,10 @@ class BreadthFirstSearch {
         }
 };
 
-class IterativeDeepening {
+class IterativeDeepening: public Search {
     public:
         IterativeDeepening() {
             std::cout << "\nIterativeDeepening constructor called.\n" << std::endl;
-        }
-
-        int checkNode(int startNode, int goalNode,
-                      int graph_length) {
-            // This function checks if the start node is the same as the goal node.
-            // If they are the same, it returns 1, otherwise it returns 0.
-            if(graph_length == 0) {
-                std::cout << "Graph is empty." << std::endl;
-                return 0;
-            }
-            if(startNode < 0 || startNode >= graph_length || 
-               goalNode < 0 || goalNode >= graph_length) {
-                std::cout << "Invalid start or goal node." << std::endl;
-                return 0;
-            }
-
-            return 1;
         }
 
         void search(int startNode, int goalNode,
