@@ -69,6 +69,7 @@ class UniformCostSearch {
                 if(current_node == goalNode) {
                     std::cout << "Goal node found: " << goalNode << std::endl;
                     std::cout << "Total iterations: " << iteration << std::endl;
+                    std::cout << "Cost to reach goal node: " << cost[goalNode] << std::endl;
 
                     std::vector<int> path = returnpath(startNode, goalNode, parent);
                     int path_cost = cost[goalNode];
@@ -135,7 +136,6 @@ class Asearch {
             return min_index;
         }
 
-        // Placeholder for A* search implementation
         void search(int startNode, int goalNode,
                     const std::vector<std::vector<std::pair<int, int>>>& graph_and_costs) {
             std::cout << "Performing A* search..." << std::endl;

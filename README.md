@@ -31,9 +31,11 @@ For Ubuntu users:
 ```bash
 git clone https://github.com/sebastianooliani/motion_planning_cpp.git
 cd motion_planning_cpp
-mkdir build && cd build
+mkdir build
+cd build
 cmake ..
 make
+./app
 ```
 
 For Windows users:
