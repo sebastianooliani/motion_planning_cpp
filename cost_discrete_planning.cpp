@@ -97,10 +97,10 @@ class UniformCostSearch {
         }
     };
 
-class Asearch {
+class AStarSearch {
     public:
-        Asearch() {
-            std::cout << "\nAsearch constructor called.\n" << std::endl;
+        AStarSearch() {
+            std::cout << "\nA* search constructor called.\n" << std::endl;
         }
 
         int checkNode(int startNode, int goalNode,
@@ -202,7 +202,7 @@ int main() {
     };
     ucs.search(0, 5, graph);
 
-    Asearch a_search;
+    AStarSearch a_search;
     a_search.search(0, 5, graph);
     return 0;
 }
