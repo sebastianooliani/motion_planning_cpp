@@ -11,7 +11,7 @@ class UniformCostSearch: public Search {
         }
 
         void search(int startNode, int goalNode,
-                    const std::vector<std::vector<std::pair<int, int>>>& graph_and_costs) {
+                    const std::vector<std::vector<std::vector<int>>>& graph_and_costs) {
             std::cout << "Performing uniform cost search..." << std::endl;
             std::cout << "Searching from node " << startNode
                       << " to node " << goalNode << std::endl;
@@ -47,11 +47,11 @@ class UniformCostSearch: public Search {
                     return;
                 }
 
-                std::vector<std::pair<int, int>> next_nodes = graph_and_costs[current_node];
+                std::vector<std::vector<int>> next_nodes = graph_and_costs[current_node];
                 int len = next_nodes.size();
                 for(int i = 0; i < len; i++) {
-                    int next_node = next_nodes[i].first;
-                    int edge_cost = next_nodes[i].second;
+                    int next_node = next_nodes[i][0];
+                    int edge_cost = next_nodes[i][1];
                     int new_cost = cost[current_node] + edge_cost;
 
                     if(new_cost < cost[next_node]){
@@ -73,7 +73,7 @@ class AStarSearch: public Search {
         }
 
         void search(int startNode, int goalNode,
-                    const std::vector<std::vector<std::pair<int, int>>>& graph_and_costs) {
+                    const std::vector<std::vector<std::vector<int>>>& graph_and_costs) {
             std::cout << "Performing A* search..." << std::endl;
             std::cout << "Searching from node " << startNode
                       << " to node " << goalNode << std::endl;
@@ -107,11 +107,11 @@ class AStarSearch: public Search {
                 return;
             }
 
-            std::vector<std::pair<int, int>> next_nodes = graph_and_costs[current_node];
+            std::vector<std::vector<int>> next_nodes = graph_and_costs[current_node];
             int len = next_nodes.size();
             for(int i = 0; i < len; i++) {
-                int next_node = next_nodes[i].first;
-                int edge_cost = next_nodes[i].second;
+                int next_node = next_nodes[i][0];
+                int edge_cost = next_nodes[i][1];
                 int new_cost = cost[current_node] + edge_cost;
 
                 if (new_cost < cost[next_node]) {
@@ -128,7 +128,7 @@ class AStarSearch: public Search {
 int main() {
     UniformCostSearch ucs;
     // Each pair is (neighbor, cost)
-    std::vector<std::vector<std::pair<int, int>>> graph = {
+    std::vector<std::vector<std::vector<int>>> graph = {
         {{1, 2}, {2, 4}},        // Node 0: to 1 (cost 2), to 2 (cost 4)
         {{0, 2}, {3, 7}, {4, 3}},// Node 1: to 0 (2), to 3 (7), to 4 (3)
         {{0, 4}, {4, 1}},        // Node 2: to 0 (4), to 4 (1)
