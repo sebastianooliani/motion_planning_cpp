@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <deque>
 #include "utils.h"
-#include "discrete_planning.h"
+#include "cost_discrete_planning.h"
 
 void UniformCostSearch::search(int startNode, int goalNode,
                     const std::vector<std::vector<std::vector<int>>>& graph_and_costs) {
