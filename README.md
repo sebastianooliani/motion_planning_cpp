@@ -19,11 +19,11 @@ A C++ library for motion planning algorithms, designed for robotics and autonomo
 - Example applications and demos
 -->
 ## Getting Started
-
+<!-- 
 ### Prerequisites
 
 - C++14 compatible compiler
-- CMake 3.10 or higher
+- CMake 3.10 or higher -->
 
 ### Build Instructions
 
@@ -31,11 +31,11 @@ For Ubuntu users:
 ```bash
 git clone https://github.com/sebastianooliani/motion_planning_cpp.git
 cd motion_planning_cpp
-mkdir build
+mkdir build # If first use, create a build directory
 cd build
 cmake ..
 make
-./app
+./main.exe
 ```
 
 For Windows users:
@@ -60,6 +60,6 @@ See the [docs](docs/) folder for detailed API documentation and usage guides.
 
 Contributions are welcome! Please open issues or submit pull requests.
 
-## License
+<!-- ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. -->
