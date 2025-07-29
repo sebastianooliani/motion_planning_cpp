@@ -21,7 +21,9 @@ class Map {
         Map() {
             // Initialize grid with all cells free (false means free)
             grid.resize(MAP_HEIGHT, std::vector<bool>(MAP_WIDTH, false));
-            addObstacles();  // Add hardcoded obstacles
+            // Add static obstacles to the map
+            // keep memory of where the obstacles are
+            obstacles = addObstacles();
         }
 
         // Check if a cell is free (not an obstacle)
@@ -52,19 +54,28 @@ class Map {
             }
         }
 
+        const std::vector<std::vector<int>>& getObstacles() const {
+            return obstacles;
+        }
+
     private:
         std::vector<std::vector<bool>> grid;  // true = obstacle, false = free
+        std::vector<std::vector<int>> obstacles;  // keep track of obstacle positions
 
         // Add static obstacles to the map
-        void addObstacles() {
+        const std::vector<std::vector<int>> addObstacles() {
+            std::vector<std::vector<int>> obstacles;
             // Horizontal wall
             for (int x = 10; x < 30; ++x) {
                 grid[10][x] = true;
+                obstacles.push_back({x, 10});
             }
             // Vertical barrier
             for (int y = 0; y < 10; ++y) {
                 grid[y][20] = true;
+                obstacles.push_back({20, y});
             }
+            return obstacles;
         }
 };
 

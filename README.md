@@ -35,7 +35,7 @@ mkdir build # If first use, create a build directory
 cd build
 cmake ..
 make
-./main.exe
+./main
 ```
 
 For Windows users:

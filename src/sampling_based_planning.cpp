@@ -57,8 +57,8 @@ std::vector<std::vector<int>> PRMPlanner::find_neighbours(const std::vector<Poin
             double distance = std::sqrt(std::pow(point.x - other.x, 2) +
                                         std::pow(point.y - other.y, 2));
             if (distance <= distance_threshold) {
-                if(isCollisionFree(map, static_cast<int>(point.x), static_cast<int>(point.y),
-                                static_cast<int>(other.x), static_cast<int>(other.y))) {
+                // Check if the path between point and other is collision-free
+                if(isCollisionFree(map, static_cast<int>(point.x), static_cast<int>(point.y), static_cast<int>(other.x), static_cast<int>(other.y))) {
                     graph[i].push_back(static_cast<int>(j));  // Store the neighbor index
                 }
             }
@@ -78,6 +78,22 @@ bool PRMPlanner::isConnected(const std::vector<std::vector<int>>& graph) {
 }
 
 std::vector<std::vector<int>> PRMPlanner::build_connected_graph(std::vector<Point>& sampled_points) {
+    // first of all, we need to check if the sampled points are not too close to obstacles
+    for (int i = 0; i < sampled_points.size(); ++i) {
+        const auto& p = sampled_points[i];
+        for (const auto& obstacle : map.getObstacles()) {
+            // euclidean distance
+            double distance = std::sqrt(std::pow(obstacle[0] - p.x, 2) +
+                                        std::pow(obstacle[1] - p.y, 2));
+            if (distance < 2.5) {
+                // std::cout << "Point (" << p.x << ", " << p.y << ") is too close to an obstacle, removing it.\n";
+                sampled_points.erase(sampled_points.begin() + i);
+                --i;  // Adjust index after removal
+                break;
+            }
+        }
+    }
+
     // find the nearest neighbors for each sampled point
     // consider a distance threshold for connection
     double connection_distance = 5.0;  // Example threshold

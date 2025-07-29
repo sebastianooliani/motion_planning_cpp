@@ -11,24 +11,54 @@
 #include "discrete_planning.h"
 #include "cost_discrete_planning.h"
 #include "sampling_based_planning.h"
+#include <fstream>
+
+#define SAMPLING_POINTS 50
 
 int main() {
     Map map;
 
     // Sample a number of points in free space (you can increase this)
     std::vector<Point> sampled_points;
-    for (int i = 0; i < 20; ++i) {
+    for (int i = 0; i < SAMPLING_POINTS; ++i) {
         sampled_points.push_back(sampleFreePoint(map));
     }
 
+    // Display the map with sampled points
     std::cout << "Sampled Points in Free Space:\n";
     map.display(sampled_points);  // Visualize the map and sampled nodes
 
-    // write dowmn the sampled points
+    // write down the sampled points
     std::cout << "Sampled Points:\n";
     for (const auto& p : sampled_points) {
         std::cout << "(" << p.x << ", " << p.y << ")\n";
     }
+
+    std::ofstream file("graph.txt");
+
+    for (const auto& p : sampled_points) {
+        file << "N " << p.x << " " << p.y << "\n";
+    }
+    // to get the edges, access the map and look for '#' characters
+    for(int y = 0; y < MAP_HEIGHT; ++y) {
+        for (int x = 0; x < MAP_WIDTH; ++x) {
+            if (map.isFree(x, y)) {
+                // Check neighbors to find edges
+                if (map.isFree(x + 1, y)) { // Right neighbor
+                    file << "E " << x << " " << y << " " << x + 1 << " " << y << "\n";
+                }
+                if (map.isFree(x, y + 1)) { // Down neighbor
+                    file << "E " << x << " " << y << " " << x << " " << y + 1 << "\n";
+                }
+            }
+        }
+    }
+    // for (const auto& edge : edges) {
+    //     const Point& a = nodes[edge.first];
+    //     const Point& b = nodes[edge.second];
+    //     file << "E " << a.x << " " << a.y << " " << b.x << " " << b.y << "\n";
+    // }
+    file.close();
 
     // Your PRM logic (graph construction, neighbor connection, etc.) goes here
     PRMPlanner prm(map);
@@ -43,8 +73,8 @@ int main() {
         std::cout << std::endl;
     }*/
     // Example usage of a search algorithm
-    int startNode = 0;  // Starting from the first sampled point
-    int goalNode = 5;   // Example goal node
+    int startNode = 7;  // Starting from the first sampled point
+    int goalNode = 10;   // Example goal node
 
     // print the actual coordinates of the start and goal nodes
     std::cout << "Start Node: (" << sampled_points[startNode].x << ", " << sampled_points[startNode].y << ")\n";
