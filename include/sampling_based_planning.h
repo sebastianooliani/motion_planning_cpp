@@ -88,6 +88,8 @@ class PRMPlanner {
     public:
         PRMPlanner(const Map& map) : map(map) {}
 
+        void avoidObstacles(std::vector<Point>& sampled_points, const Map& map);
+
         std::vector<std::vector<int>> find_neighbours(const std::vector<Point>& sampled_points, double distance_threshold);
 
         bool isConnected(const std::vector<std::vector<int>>& graph);
@@ -98,6 +100,18 @@ class PRMPlanner {
         // given a search algorithm, a connected graph, start node and goal node, return the path
         void findPath(int startNode, int goalNode, searchAlgorithm algo, const std::vector<std::vector<int>>& graph) {
             algo.search(startNode, goalNode, graph);
+        }
+
+        // costs version
+        std::vector<std::vector<std::pair<int, double>>> find_neighbours_and_costs(const std::vector<Point>& sampled_points, double distance_threshold);
+
+        bool isConnected_costs(const std::vector<std::vector<std::pair<int, double>>>& graph);
+
+        std::vector<std::vector<std::pair<int, double>>> build_connected_graph_and_costs(std::vector<Point>& sampled_points);
+
+        template <typename searchAlgorithm>
+        void findPath(int startNode, int goalNode, searchAlgorithm algo, const std::vector<std::vector<std::pair<int, double>>>& graph_and_costs) {
+            algo.search(startNode, goalNode, graph_and_costs);
         }
         
     private:

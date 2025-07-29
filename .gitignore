@@ -3,3 +3,5 @@ bin/
 .vscode/
 *.exe
 test.cpp
+*.png
+*.jpg

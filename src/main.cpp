@@ -13,7 +13,7 @@
 #include "sampling_based_planning.h"
 #include <fstream>
 
-#define SAMPLING_POINTS 50
+#define SAMPLING_POINTS 1000
 
 int main() {
     Map map;
@@ -63,6 +63,7 @@ int main() {
     // Your PRM logic (graph construction, neighbor connection, etc.) goes here
     PRMPlanner prm(map);
     std::vector<std::vector<int>> graph = prm.build_connected_graph(sampled_points);
+    std::vector<std::vector<std::pair<int, double>>> graph_and_costs = prm.build_connected_graph_and_costs(sampled_points);
 
     // print the graph structure
     /*for (size_t i = 0; i < graph.size(); ++i) {
@@ -73,13 +74,15 @@ int main() {
         std::cout << std::endl;
     }*/
     // Example usage of a search algorithm
-    int startNode = 7;  // Starting from the first sampled point
-    int goalNode = 10;   // Example goal node
+    int startNode = 0;  // Starting from the first sampled point
+    int goalNode = 5;   // Example goal node
 
     // print the actual coordinates of the start and goal nodes
     std::cout << "Start Node: (" << sampled_points[startNode].x << ", " << sampled_points[startNode].y << ")\n";
     std::cout << "Goal Node: (" << sampled_points[goalNode].x << ", " << sampled_points[goalNode].y << ")\n";
 
     BreadthFirstSearch bfs;
+    AStarSearch aStar;
     prm.findPath(startNode, goalNode, bfs, graph);
+    prm.findPath(startNode, goalNode, aStar, graph);
 }
