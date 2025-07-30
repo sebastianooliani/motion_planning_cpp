@@ -61,7 +61,7 @@ void UniformCostSearch::search(int startNode, int goalNode,
 };
 
 void AStarSearch::search(int startNode, int goalNode,
-                    const std::vector<std::vector<std::vector<int>>>& graph_and_costs) {
+                    const std::vector<std::vector<std::pair<int, double>>>& graph_and_costs) {
     std::cout << "Performing A* search..." << std::endl;
     std::cout << "Searching from node " << startNode
                 << " to node " << goalNode << std::endl;
@@ -73,9 +73,9 @@ void AStarSearch::search(int startNode, int goalNode,
     std::vector<int> queue;
     queue.push_back(startNode);
     std::vector<int> parent(graph_and_costs.size(), -1);
-    std::vector<int> cost(graph_and_costs.size(), 10000); // cost to reach each node
-    cost[startNode] = 0; // cost of start node is 0
-    std::vector<int> heuristic(graph_and_costs.size(), 1); // heuristic values for each node
+    std::vector<double> cost(graph_and_costs.size(), 10000.); // cost to reach each node
+    cost[startNode] = 0.; // cost of start node is 0
+    std::vector<double> heuristic(graph_and_costs.size(), 1.); // heuristic values for each node
 
     int iteration = 0;
     while(queue.size() > 0) {
@@ -95,12 +95,12 @@ void AStarSearch::search(int startNode, int goalNode,
             return;
         }
 
-        std::vector<std::vector<int>> next_nodes = graph_and_costs[current_node];
+        std::vector<std::pair<int, double>> next_nodes = graph_and_costs[current_node];
         int len = next_nodes.size();
         for(int i = 0; i < len; i++) {
-            int next_node = next_nodes[i][0];
-            int edge_cost = next_nodes[i][1];
-            int new_cost = cost[current_node] + edge_cost;
+            int next_node = next_nodes[i].first;
+            double edge_cost = next_nodes[i].second;
+            double new_cost = cost[current_node] + edge_cost;
 
             if (new_cost < cost[next_node]) {
                 cost[next_node] = new_cost;

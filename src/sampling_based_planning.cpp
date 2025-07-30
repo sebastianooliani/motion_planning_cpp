@@ -47,7 +47,7 @@ bool isCollisionFree(const Map& map, int x0, int y0, int x1, int y1) {
     return true;  // No obstacle along the line
 }
 
-void avoidObstacles(std::vector<Point>& sampled_points, const Map& map) {
+void PRMPlanner::avoidObstacles(std::vector<Point>& sampled_points, const Map& map) {
     for (int i = 0; i < sampled_points.size(); ++i) {
         const auto& p = sampled_points[i];
         for (const auto& obstacle : map.getObstacles()) {
@@ -124,7 +124,7 @@ bool PRMPlanner::isConnected_costs(const std::vector<std::vector<std::pair<int, 
     return true;  // If all nodes have connections, the graph is connected
 }
 
-std::vector<std::vector<int>> PRMPlanner::build_connected_graph(std::vector<Point>& sampled_points) {
+std::vector<std::vector<int>> PRMPlanner::build_connected_graph(std::vector<Point>& sampled_points, const Map& map) {
     // first of all, we need to check if the sampled points are not too close to obstacles
     avoidObstacles(sampled_points, map);
 
@@ -157,7 +157,7 @@ std::vector<std::vector<int>> PRMPlanner::build_connected_graph(std::vector<Poin
     return graph;
 }
 
-std::vector<std::vector<std::pair<int, double>>> PRMPlanner::build_connected_graph_and_costs(std::vector<Point>& sampled_points) {
+std::vector<std::vector<std::pair<int, double>>> PRMPlanner::build_connected_graph_and_costs(std::vector<Point>& sampled_points, const Map& map) {
     // first of all, we need to check if the sampled points are not too close to obstacles
     avoidObstacles(sampled_points, map);
 

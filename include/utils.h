@@ -40,13 +40,13 @@ class Search{
         }
 
         int find_index_minimum_cost_heuristic(const std::vector<int>& queue,
-                                         const std::vector<int>& cost,
-                                         const std::vector<int>& heuristic) {
+                                         const std::vector<double>& cost,
+                                         const std::vector<double>& heuristic) {
             int min_index = -1;
-            int min_cost = 100000;
+            double min_cost = 100000.;
 
             for (int i = 0; i < queue.size(); ++i) {
-                int total_cost = cost[queue[i]] + heuristic[queue[i]];
+                double total_cost = cost[queue[i]] + heuristic[queue[i]];
                 if (total_cost < min_cost) {
                     min_cost = total_cost;
                     min_index = i;

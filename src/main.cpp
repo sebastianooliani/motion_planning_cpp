@@ -62,8 +62,8 @@ int main() {
 
     // Your PRM logic (graph construction, neighbor connection, etc.) goes here
     PRMPlanner prm(map);
-    std::vector<std::vector<int>> graph = prm.build_connected_graph(sampled_points);
-    std::vector<std::vector<std::pair<int, double>>> graph_and_costs = prm.build_connected_graph_and_costs(sampled_points);
+    // std::vector<std::vector<int>> graph = prm.build_connected_graph(sampled_points, map);
+    std::vector<std::vector<std::pair<int, double>>> graph_and_costs = prm.build_connected_graph_and_costs(sampled_points, map);
 
     // print the graph structure
     /*for (size_t i = 0; i < graph.size(); ++i) {
@@ -83,6 +83,6 @@ int main() {
 
     BreadthFirstSearch bfs;
     AStarSearch aStar;
-    prm.findPath(startNode, goalNode, bfs, graph);
-    prm.findPath(startNode, goalNode, aStar, graph);
+    // prm.findPath(startNode, goalNode, bfs, graph);
+    prm.findPath_and_costs(startNode, goalNode, aStar, graph_and_costs);
 }

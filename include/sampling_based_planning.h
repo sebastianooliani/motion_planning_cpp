@@ -94,7 +94,7 @@ class PRMPlanner {
 
         bool isConnected(const std::vector<std::vector<int>>& graph);
 
-        std::vector<std::vector<int>> build_connected_graph(std::vector<Point>& sampled_points);
+        std::vector<std::vector<int>> build_connected_graph(std::vector<Point>& sampled_points, const Map& map);
 
         template <typename searchAlgorithm>
         // given a search algorithm, a connected graph, start node and goal node, return the path
@@ -107,10 +107,10 @@ class PRMPlanner {
 
         bool isConnected_costs(const std::vector<std::vector<std::pair<int, double>>>& graph);
 
-        std::vector<std::vector<std::pair<int, double>>> build_connected_graph_and_costs(std::vector<Point>& sampled_points);
+        std::vector<std::vector<std::pair<int, double>>> build_connected_graph_and_costs(std::vector<Point>& sampled_points, const Map& map);
 
         template <typename searchAlgorithm>
-        void findPath(int startNode, int goalNode, searchAlgorithm algo, const std::vector<std::vector<std::pair<int, double>>>& graph_and_costs) {
+        void findPath_and_costs(int startNode, int goalNode, searchAlgorithm algo, const std::vector<std::vector<std::pair<int, double>>>& graph_and_costs) {
             algo.search(startNode, goalNode, graph_and_costs);
         }
         

@@ -24,7 +24,7 @@ class AStarSearch: public Search {
         }
 
         void search(int startNode, int goalNode,
-                    const std::vector<std::vector<std::vector<int>>>& graph_and_costs);
+                    const std::vector<std::vector<std::pair<int, double>>>& graph_and_costs);
 };
 
 #endif
